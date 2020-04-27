@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Authenticator</string>
+    <string name="logo_description">Not Your Average Developer Logo</string>
+    <string name="username">Username</string>
+    <string name="username_logo">username logo</string>
+    <string name="password">Password</string>
+    <string name="sign_in">   Sign In   </string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_have_an_account">Don\'t Have An Account?</string>
+    <string name="create_a_new_account">Create A New Account</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="full_name">Full Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="create_account">Create Account</string>
+    <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="email_address_logo">Email Address Logo</string>
+    <string name="email_address">Email Address</string>
+    <string name="email_address_placeholder">Email Address PlaceHolder</string>
+    <string name="mobile_number_placeholder">Mobile Number PlaceHolder</string>
+    <string name="phone_number_logo">Phone Number Logo</string>
+    <string name="_26_04_2020">26–04–2020</string>
+</resources>
