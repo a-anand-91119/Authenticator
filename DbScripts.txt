@@ -1,0 +1,9 @@
+CREATE TABLE `auth_user_data` (
+  `aud_id` int(11) NOT NULL,
+  `aud_username` varchar(32) NOT NULL,
+  `aud_full_name` varchar(50) NOT NULL,
+  `aud_hash` varchar(2000) NOT NULL,
+  `aud_email` varchar(100) NOT NULL,
+  `aud_phone` varchar(10) NOT NULL,
+  `aud_profile_img` varchar(2000) NOT NULL
+);
