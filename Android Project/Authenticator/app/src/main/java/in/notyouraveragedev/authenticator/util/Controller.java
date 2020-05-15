@@ -64,7 +64,7 @@ public class Controller extends Application {
      */
     public ImageLoader getImageLoader() {
         if (imageLoader == null)
-            imageLoader = new ImageLoader(requestQueue, new Cache());
+            imageLoader = new ImageLoader(getRequestQueue(), new Cache());
         return imageLoader;
     }
 

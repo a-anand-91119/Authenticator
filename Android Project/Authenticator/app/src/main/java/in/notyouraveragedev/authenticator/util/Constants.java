@@ -27,4 +27,5 @@ public class Constants {
     public static final String FAILURE = "FAILURE";
     public static final String STATUS = "status";
     public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String LOGGED_IN_USER = "loggedInUser";
 }

@@ -28,6 +28,7 @@ import in.notyouraveragedev.authenticator.R;
 import in.notyouraveragedev.authenticator.domain.User;
 import in.notyouraveragedev.authenticator.util.Constants;
 import in.notyouraveragedev.authenticator.util.Controller;
+import in.notyouraveragedev.authenticator.util.PreferenceManager;
 import in.notyouraveragedev.authenticator.util.Utilities;
 
 /**
@@ -45,11 +46,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressBar loginProgressbar;
 
     private ConstraintLayout constraintLayout;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preferenceManager = PreferenceManager.getInstance(getApplicationContext());
+
+        // check whether user logged-in data exists
+        if (preferenceManager.contains(Constants.LOGGED_IN_USER)) {
+            openProfileActivity();
+        }
 
         // initializing UI Elements
         initializeUIElements();
@@ -125,10 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 loginProgressbar.setVisibility(View.INVISIBLE);
                 try {
                     if (response.getString(Constants.STATUS).equals(Constants.SUCCESS)) {
-                        Intent loginSuccessIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                        User user = createUserObject(response.getJSONObject("user"));
-                        loginSuccessIntent.putExtra("user", user);
-                        startActivity(loginSuccessIntent);
+                        storeUserDataInPreference(response);
+                        openProfileActivity();
                     } else {
                         Snackbar.make(constraintLayout, response.getString(Constants.ERROR_MESSAGE), Snackbar.LENGTH_LONG).show();
                     }
@@ -147,6 +153,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * Method to store the user object from the response into shared preference
+     *
+     * @param response the JSON response from the server
+     * @throws JSONException
+     */
+    private void storeUserDataInPreference(JSONObject response) throws JSONException {
+        User user = createUserObject(response.getJSONObject("user"));
+        preferenceManager.saveObject(Constants.LOGGED_IN_USER, user);
+    }
+
+    /**
+     * Method to open the profile activity.
+     * The method checks the validity of the stored data before logging in the user
+     */
+    private void openProfileActivity() {
+        Intent loginSuccessIntent = new Intent(MainActivity.this, ProfileActivity.class);
+        Object fromPreference = preferenceManager.fetchObject(Constants.LOGGED_IN_USER, User.class);
+        if (fromPreference instanceof User) {
+            loginSuccessIntent.putExtra("user", (User) fromPreference);
+            startActivity(loginSuccessIntent);
+        } else {
+            preferenceManager.removeData(Constants.LOGGED_IN_USER);
+            Snackbar.make(constraintLayout, "User Not Logged In", Snackbar.LENGTH_SHORT);
+        }
+    }
 
     /**
      * Creates a {@link User} from the {@link JSONObject} received from server

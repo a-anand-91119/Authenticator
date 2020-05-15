@@ -2,6 +2,7 @@ package in.notyouraveragedev.authenticator.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,9 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.notyouraveragedev.authenticator.R;
 import in.notyouraveragedev.authenticator.domain.User;
+import in.notyouraveragedev.authenticator.util.Constants;
 import in.notyouraveragedev.authenticator.util.Controller;
+import in.notyouraveragedev.authenticator.util.PreferenceManager;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -69,5 +72,24 @@ public class ProfileActivity extends AppCompatActivity {
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.ENGLISH);
         todaysDate.setText(df.format(c));
 
+        // adding onclick listener to logout button
+        findViewById(R.id.bt_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+    }
+
+    /**
+     * Method to logout a user.
+     * The method removed the user data from shared preference
+     * and goes back to the previous activity (Main Activity)
+     */
+    private void logout() {
+        if (PreferenceManager.getInstance(getApplicationContext()).removeData(Constants.LOGGED_IN_USER))
+            this.finish();
+        else
+            Snackbar.make(constraintLayout, "Failed To Logut User", Snackbar.LENGTH_SHORT);
     }
 }
