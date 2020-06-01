@@ -59,7 +59,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Image Load Error Header", error.networkResponse.allHeaders.toString());
-                Log.e("Image Load Error", Objects.requireNonNull(error.getMessage()));
                 Snackbar.make(constraintLayout, "Failed To Load Profile Picture", Snackbar.LENGTH_SHORT).show();
             }
         });
